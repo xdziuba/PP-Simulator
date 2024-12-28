@@ -1,5 +1,7 @@
 ﻿namespace Simulator;
 
+using Simulator.Maps;
+
 internal class Program
 {
     static void Main(string[] args)
@@ -10,30 +12,28 @@ internal class Program
 
     public static void Lab5a()
     {
-        Rectangle rect1 = new Rectangle(2, 3, 5, 7);
-        Console.WriteLine("Prostokat 1: " + rect1);
-
-        Rectangle rect2 = new Rectangle(7, 5, 3, 2);
-        Console.WriteLine("Prostokat 2: " + rect2);
-
-        Point p1 = new Point(1, 1);
-        Point p2 = new Point(4, 4);
-        Rectangle rect3 = new Rectangle(p1, p2);
-        Console.WriteLine("Prostokat 3: " + rect3);
+        try
+        {
+            Map map1 = new SmallSquareMap(1);
+        }
+        catch (Exception ex)
+        { Console.WriteLine(ex.Message); }
 
         try
         {
-            Rectangle rect4 = new Rectangle(2, 2, 2, 5);
+            Map map2 = new SmallSquareMap(22);
         }
-        catch (ArgumentException ex)
-        {
-            Console.WriteLine(ex.Message);
-        }
+        catch (Exception ex)
+        { Console.WriteLine(ex.Message); }
 
-        Point testPoint1 = new Point(3, 4);
-        Point testPoint2 = new Point(6, 8);
-        Console.WriteLine(rect1.Contains(testPoint1));
-        Console.WriteLine(rect1.Contains(testPoint2));
+        Map map = new SmallSquareMap(5);
 
+        Point point1 = new Point(6, 4);
+        Point point2 = new Point(3, 3);
+        Console.WriteLine(map.Exist(point1));
+        Console.WriteLine(map.Exist(point2));
+
+        Console.WriteLine(map.Next(point2, Direction.Left));
+        Console.WriteLine(map.NextDiagonal(point2, Direction.Left));
     }
 }
