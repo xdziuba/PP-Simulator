@@ -5,25 +5,35 @@ internal class Program
     static void Main(string[] args)
     {
         Console.WriteLine("Starting Simulator!\n");
-        Lab4b();
+        Lab5a();
+    }
 
-        static void Lab4b()
+    public static void Lab5a()
+    {
+        Rectangle rect1 = new Rectangle(2, 3, 5, 7);
+        Console.WriteLine("Prostokat 1: " + rect1);
+
+        Rectangle rect2 = new Rectangle(7, 5, 3, 2);
+        Console.WriteLine("Prostokat 2: " + rect2);
+
+        Point p1 = new Point(1, 1);
+        Point p2 = new Point(4, 4);
+        Rectangle rect3 = new Rectangle(p1, p2);
+        Console.WriteLine("Prostokat 3: " + rect3);
+
+        try
         {
-            object[] myObjects = {
-        new Animals() { Description = "dogs"},
-        new Birds { Description = "  eagles ", Size = 10 },
-        new Elf("e", 15, -3),
-        new Orc("morgash", 6, 4)
-            };
-            Console.WriteLine("\nMy objects:");
-            foreach (var o in myObjects) Console.WriteLine(o);
-            /*
-                My objects:
-                ANIMALS: Dogs <3>
-                BIRDS: Eagles (fly+) <10>
-                ELF: E## [10][0]
-                ORC: Morgash [6][4]
-            */
+            Rectangle rect4 = new Rectangle(2, 2, 2, 5);
         }
+        catch (ArgumentException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+
+        Point testPoint1 = new Point(3, 4);
+        Point testPoint2 = new Point(6, 8);
+        Console.WriteLine(rect1.Contains(testPoint1));
+        Console.WriteLine(rect1.Contains(testPoint2));
+
     }
 }
