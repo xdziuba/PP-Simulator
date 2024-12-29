@@ -1,6 +1,7 @@
-﻿namespace Simulator;
-
+﻿using Simulator;
 using Simulator.Maps;
+
+namespace Runner;
 
 internal class Program
 {

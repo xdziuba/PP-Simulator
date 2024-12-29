@@ -1,4 +1,8 @@
-﻿namespace Simulator;
+﻿using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
+
+namespace Simulator;
 
 public abstract class Creature
 {
@@ -27,7 +31,7 @@ public abstract class Creature
 
     public Creature() { }
 
-    public abstract void SayHi();
+    public abstract string Greeting();
 
     public abstract string Info { get; }
 
@@ -41,22 +45,17 @@ public abstract class Creature
         }
     }
 
-    public void Go(Direction direction)
-    {
-        string directionName = direction.ToString().ToLower();
-        Console.WriteLine($"{Name} goes {directionName}.");
-    }
+    public string Go(Direction direction) => $"{direction.ToString().ToLower()}";
 
-    public void Go(Direction[] directions)
+    public string[] Go(Direction[] directions)
     {
+        List<string> moves = new List<string>();
         foreach (Direction direction in directions)
         {
-            Go(direction);
+            moves.Add(Go(direction));
         }
+        return moves.ToArray();
     }
 
-    public void Go(string directions)
-    {
-        Go(DirectionParser.Parse(directions));
-    }
+    public string[] Go(string directions) => Go(DirectionParser.Parse(directions));
 }
