@@ -9,6 +9,16 @@ public abstract class Map
     public int SizeY { get; set; }
     public readonly Rectangle _map;
 
+    public abstract void Add(Creature creature, Point point);
+    public abstract void Remove(Creature creature, Point point);
+    public void Move(Creature creature, Point pos, Point nextpos)
+    {
+        Remove(creature, pos);
+        Add(creature, nextpos);
+    }
+    public abstract List<Creature> At(Point point);
+    public abstract List<Creature> At(int x, int y);
+
     protected Map(int sizeX, int sizeY)
     {
         if (sizeX < 5 || sizeY < 5)

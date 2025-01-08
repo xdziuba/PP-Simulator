@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using Simulator.Maps;
+using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 
@@ -10,6 +12,8 @@ public abstract class Creature
     private int level = 1;
 
     public abstract int Power { get; }
+    public Map? CurrentMap { get; private set; } = null;
+    public Point CreaturePos { get; private set; }
 
     public string Name
     {
@@ -45,17 +49,29 @@ public abstract class Creature
         }
     }
 
-    public string Go(Direction direction) => $"{direction.ToString().ToLower()}";
-
-    public string[] Go(Direction[] directions)
+    public void AssignMap(Map map, Point point)
     {
-        List<string> moves = new List<string>();
-        foreach (Direction direction in directions)
+        if (CurrentMap != null)
         {
-            moves.Add(Go(direction));
+            throw new InvalidOperationException("Blad! - Mapa byla juz wczesniej przydzielona.");
         }
-        return moves.ToArray();
+        CurrentMap = map;
+        CreaturePos = point;
+        CurrentMap.Add(this, point);
     }
 
-    public string[] Go(string directions) => Go(DirectionParser.Parse(directions));
+    public string Go(Direction direction)
+    {
+        if (CurrentMap != null)
+        {
+            var newPos = CurrentMap.Next(CreaturePos, direction);
+            CurrentMap.Move(this, CreaturePos, newPos);
+            CreaturePos = newPos;
+            return $"{direction.ToString().ToLower()}";
+        }
+        else
+        {
+            throw new InvalidOperationException("Blad! - Stwor nie ma jeszcze przydzielonej mapy.");
+        }
+    }
 }
