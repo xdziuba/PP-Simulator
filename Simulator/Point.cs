@@ -12,8 +12,8 @@ public readonly struct Point
         {
             Direction.Left => new Point(X - 1, Y),
             Direction.Right => new Point(X + 1, Y),
-            Direction.Up => new Point(X, Y + 1),
-            Direction.Down => new Point(X, Y - 1),
+            Direction.Up => new Point(X, Y - 1),
+            Direction.Down => new Point(X, Y + 1),
             _ => throw new NotSupportedException()
         };
     }

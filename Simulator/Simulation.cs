@@ -52,7 +52,7 @@ public class Simulation
         get
         {
             if (Finished) throw new InvalidOperationException("Blad! - Symulacja sie zakonczyla.");
-            return Moves[currentMoveIndex].ToString().ToLower();
+            return DirectionParser.Parse(Moves[currentMoveIndex].ToString())[0].ToString().ToLower();
         }
     }
 
