@@ -9,15 +9,15 @@ public abstract class Map
     public int SizeY { get; set; }
     public readonly Rectangle _map;
 
-    public abstract void Add(Creature creature, Point point);
-    public abstract void Remove(Creature creature, Point point);
-    public void Move(Creature creature, Point pos, Point nextpos)
+    public abstract void Add(IMappable inter, Point point);
+    public abstract void Remove(IMappable inter, Point point);
+    public void Move(IMappable inter, Point pos, Point nextpos)
     {
-        Remove(creature, pos);
-        Add(creature, nextpos);
+        Remove(inter, pos);
+        Add(inter, nextpos);
     }
-    public abstract List<Creature> At(Point point);
-    public abstract List<Creature> At(int x, int y);
+    public abstract List<IMappable> At(Point point);
+    public abstract List<IMappable> At(int x, int y);
 
     protected Map(int sizeX, int sizeY)
     {

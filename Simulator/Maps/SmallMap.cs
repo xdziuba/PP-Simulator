@@ -2,7 +2,7 @@
 
 public abstract class SmallMap : Map
 {
-    public readonly List<Creature>?[,] _fields;
+    public readonly List<IMappable>?[,] _fields;
 
     protected SmallMap(int sizeX, int sizeY) : base(sizeX, sizeY)
     {
@@ -10,41 +10,41 @@ public abstract class SmallMap : Map
         {
             throw new ArgumentOutOfRangeException("Blad! - Maksymalny rozmiar mapy to 20 punktow.");
         }
-        _fields = new List<Creature>?[sizeX, sizeY];
+        _fields = new List<IMappable>?[sizeX, sizeY];
     }
 
-    public override void Add(Creature creature, Point point)
+    public override void Add(IMappable inter, Point point)
     {
         if (!Exist(point)) {
             throw new ArgumentOutOfRangeException("Blad! - Wskazany punkt nie nalezy do mapy.");
         }
         if (_fields[point.X, point.Y] == null)
         {
-            _fields[point.X, point.Y] = new List<Creature>();
+            _fields[point.X, point.Y] = new List<IMappable>();
         }
-        _fields[point.X, point.Y]!.Add(creature);
+        _fields[point.X, point.Y]!.Add(inter);
     }
 
-    public override void Remove(Creature creature, Point point)
+    public override void Remove(IMappable inter, Point point)
     {
         if (_fields[point.X, point.Y] != null)
         {
-            _fields[point.X, point.Y]!.Remove(creature);
+            _fields[point.X, point.Y]!.Remove(inter);
         }
     }
 
-    public override List<Creature> At(Point point) {
+    public override List<IMappable> At(Point point) {
         if (_fields[point.X, point.Y] != null)
         {
             return _fields[point.X, point.Y]!;
         }
         else
         {
-            return new List<Creature>();
+            return new List<IMappable>();
         }
     }
 
-    public override List<Creature> At(int x, int y)
+    public override List<IMappable> At(int x, int y)
     {
         Point point = new Point(x, y);
         return At(point);

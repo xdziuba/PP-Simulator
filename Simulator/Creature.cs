@@ -6,7 +6,7 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace Simulator;
 
-public abstract class Creature
+public abstract class Creature : IMappable
 {
     private string name = "Unknown";
     private int level = 1;
@@ -73,5 +73,10 @@ public abstract class Creature
         {
             throw new InvalidOperationException("Blad! - Stwor nie ma jeszcze przydzielonej mapy.");
         }
+    }
+
+    public Point GetPos()
+    {
+        return CreaturePos; 
     }
 }
