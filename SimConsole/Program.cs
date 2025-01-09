@@ -11,10 +11,22 @@ internal class Program
         int turn = 1;
         Console.OutputEncoding = Encoding.UTF8;
 
-        SmallSquareMap map = new(5);
-        List<IMappable> creatures = [new Orc("Gorbag"), new Elf("Elandor")];
-        List<Point> points = [new(2, 2), new(3, 1)];
-        string moves = "dlrludlru";
+        SmallTorusMap map = new(8, 6);
+        List<IMappable> creatures = [new Orc("Gorbag"),
+            new Elf("Elandor"),
+            new Animals{ Description = "Rabbits", Size = 6 },
+            new Birds { Description = "Eagles", Size = 4, CanFly = true },
+            new Birds { Description = "Ostriches", Size = 5, CanFly = false }
+            ];
+
+        List<Point> points = [
+            new(2, 2),
+            new(3, 1),
+            new(3, 2),
+            new(6, 5),
+            new(5, 5)
+            ];
+        string moves = "dlrludlruddurlr";
 
         Simulation simulation = new(map, creatures, points, moves);
         MapVisualizer mapVisualizer = new(simulation.Map);

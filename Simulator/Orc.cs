@@ -11,6 +11,7 @@ public class Orc : Creature
     }
 
     public override int Power => 7*Level + 3*rage;
+    public override char Symbol => 'O';
 
     public Orc() { }
     public Orc(string name, int level = 1, int rage = 1) : base(name, level)

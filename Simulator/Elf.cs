@@ -13,6 +13,7 @@ public class Elf : Creature
     }
 
     public override int Power => 8 * Level + 2 * agility;
+    public override char Symbol => 'E';
 
     public Elf() { }
     public Elf(string name, int level = 1, int agility = 1) : base(name, level)
