@@ -6,6 +6,14 @@
     ViewData["Title"] = "Symulacja";
 }
 
+<form asp-page="/Index" method="post" enctype="multipart/form-data">
+    <div>
+        <label for="file">Wybierz plik:</label>
+        <input type="file" id="file" name="file" />
+    </div>
+    <button type="submit" asp-page-handler="SimUpload">Prześlij</button>
+</form>
+
 <div class="control-panel">
     <form asp-page="/Index" method="post">
         <button type="submit" asp-page-handler="PrevTurn">←</button>

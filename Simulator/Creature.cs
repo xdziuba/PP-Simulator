@@ -3,9 +3,13 @@ using System;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
+using System.Text.Json.Serialization;
 
 namespace Simulator;
 
+[JsonPolymorphic(TypeDiscriminatorPropertyName = "Type")]
+[JsonDerivedType(typeof(Elf), nameof(Elf))]
+[JsonDerivedType(typeof(Orc), nameof(Orc))]
 public abstract class Creature : IMappable
 {
     private string name = "Unknown";

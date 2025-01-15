@@ -1,7 +1,10 @@
 ﻿using Simulator.Maps;
+using System.Text.Json.Serialization;
 
 namespace Simulator;
 
+[JsonPolymorphic(TypeDiscriminatorPropertyName = "Type")]
+[JsonDerivedType(typeof(Birds), nameof(Birds))]
 public class Animals : IMappable
 {
     private string description = "No description.";

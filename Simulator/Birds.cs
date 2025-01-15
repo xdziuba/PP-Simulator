@@ -1,7 +1,10 @@
-﻿namespace Simulator;
+﻿using System.Text.Json.Serialization;
+
+namespace Simulator;
 
 public class Birds : Animals
 {
+    [JsonInclude]
     public bool CanFly = true;
     public override char Symbol => CanFly ? 'B' : 'b';
 
