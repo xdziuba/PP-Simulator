@@ -6,6 +6,124 @@ body
 
 main {
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.left-side {
+    width: 25%;
+    height: 67vh;
+    margin-top: 15vh;
+    margin-left: 3vh;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    font-weight: 700;
+    text-align: center;
+    font-size: 1rem;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.right-side {
+    width: 25%;
+    height: 67vh;
+    margin-top: 15vh;
+    margin-right: 3vh;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    font-weight: 700;
+    text-align: center;
+    font-size: 1rem;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.right-side h1 {
+    padding-bottom:5%;
+}
+
+.right-side button {
+    margin-top: 2%;
+    background-color: darkslateblue;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.right-side button:hover {
+    background-color: midnightblue;
+    transform: translateY(-3px);
+}
+
+.right-side label:hover {
+    background-color: midnightblue;
+    transform: translateY(-3px);
+}
+
+.right-side label {
+    margin-bottom: 6%;
+    color: #1a1a1a;
+}
+
+.simulation-info {
+    margin-top: 12%;
+}
+
+.simulation-info p {
+    color: #1a1a1a;
+}
+
+.left-side h1 {
+    padding-bottom: 5%;
+}
+
+.left-side form {
+    margin: 1%;
+}
+
+select[multiple] {
+    margin-top: 2%;
+    background-color: darkslateblue;
+    border: none;
+    color: white;
+    padding: 1%;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-block;
+    text-align: center;
+    height: auto;
+    overflow-y: auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: contain;
+}
+
+
+select[multiple]:hover {
+    background-color: midnightblue;
+}
+
+select[multiple] option:checked {
+    background-color: indigo;
+    color: white;
+}
+
+.central-side {
+    height: 100%;
+    width: 50%;
 }
 
 .container {

@@ -64,8 +64,19 @@ public class IndexModel : PageModel
     public void OnGet()
     {
         Turn = HttpContext.Session.GetInt32("Turn") ?? 0;
+        if (HttpContext.Session.GetString("SimJSON") != null)
+        {
+            var options = new JsonSerializerOptions
+            {
+                WriteIndented = true,
+                ReferenceHandler = ReferenceHandler.Preserve,
+                PropertyNameCaseInsensitive = true
+            };
 
-        if (Simulation == null)
+            JSONSimDef jsonObject = JsonSerializer.Deserialize<JSONSimDef>(HttpContext.Session.GetString("SimJSON")!, options)!;
+            SimInit(jsonObject);
+        }
+        else
         {
             SimInit();
         }
@@ -130,6 +141,7 @@ public class IndexModel : PageModel
 
     public void OnPostSimUpload()
     {
+        HttpContext.Session.SetInt32("Turn", 0);
         var options = new JsonSerializerOptions
         {
             WriteIndented = true,
@@ -137,10 +149,10 @@ public class IndexModel : PageModel
             PropertyNameCaseInsensitive = true
         };
 
-        if (SimHistory == null)
-        {
-            SimInit();
-        }
+        //if (SimHistory == null)
+        //{
+            //SimInit();
+        //}
         if (File != null && File.Length > 0)
         {
             using (var stream = new MemoryStream())
