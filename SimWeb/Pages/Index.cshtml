@@ -6,52 +6,34 @@
     ViewData["Title"] = "Symulacja";
 }
 
-<div class="left-side">
-    <h1>Exportuj symulację <br />do pliku:</h1>
-    <form asp-page="/Index" method="post">
-        <fieldset>
-            <legend>Konfiguracja:</legend>
-            <label for="_creatures">Wybierz stwory:</label><br/>
-            <select id="_creatures" name="creatures" size="5" multiple>
-                <option value="orc">Ork</option>
-                <option value="elf">Elf</option>
-                <option value="rabbits">Króliki</option>
-                <option value="eagles">Orły</option>
-                <option value="emu">Emu</option>
-            </select>
-        </fieldset>
-    </form>
-</div>
 
-<div class="central-side">
-    <div class="control-panel">
-        <form asp-page="/Index" method="post">
-            <button type="submit" asp-page-handler="PrevTurn">←</button>
-        </form>
-        <h1>Tura: @Model.Turn</h1>
-        <form asp-page="/Index" method="post">
-            <button type="submit" asp-page-handler="NextTurn">→</button>
-        </form>
-    </div>
 
-    <div class="log-container">
-        @{
-            if (Model.Turn != 0)
-            {
-                var log = $"{Model.CurrentLog.Mappable} goes {Model.CurrentLog.Move}";
-                <p>@log</p>
+    <!-- Center Panel: Simulation Grid -->
+    <div class="center-panel">
+        <div class="control-panel">
+            <form asp-page="/Index" method="post">
+                <button type="submit" asp-page-handler="PrevTurn">←</button>
+            </form>
+            <h1>Tura: @Model.Turn</h1>
+            <form asp-page="/Index" method="post">
+                <button type="submit" asp-page-handler="NextTurn">→</button>
+            </form>
+        </div>
+        <div class="log-container">
+            @{
+                if (Model.Turn != 0)
+                {
+                    var log = $"{Model.CurrentLog.Mappable} goes {Model.CurrentLog.Move}";
+                    <p>@log</p>
+                }
+                else
+                {
+                    var log = "Pozycje startowe";
+                    <p>@log</p>
+                }
             }
-            else
-            {
-                var log = "Pozycje startowe";
-                <p>@log</p>
-            }
-        }
-    </div>
-
-    <div class="container">
+        </div>
         <div class="map-container" style="grid-template-columns: repeat(@Model.SizeX, 1fr); grid-template-rows: repeat(@Model.SizeY, 1fr);">
-
             @for (int row = 0; row < Model.SizeY; row++)
             {
                 for (int col = 0; col < Model.SizeX; col++)
@@ -72,7 +54,7 @@
                         {
                             path = $"creatures/{Model.CurrentLog.Symbols[cords]}.png";
                         }
-                        <div class="grid-item"><img src="@path" alt="@Model.CurrentLog.Symbols[cords]"/></div>
+                        <div class="grid-item"><img src="@path" alt="@Model.CurrentLog.Symbols[cords]" /></div>
                     }
                     else
                     {
@@ -80,67 +62,25 @@
                     }
                 }
             }
-        </div> 
-    </div>
-</div>
-
-<div class="right-side">
-    <h1>Importuj symulację <br />z pliku:</h1>
-    <form asp-page="/Index" method="post" enctype="multipart/form-data">
-        <div>
-            <label for="file">Wybierz plik</label><br />
-            <input type="file" id="file" name="file" accept=".json"/>
         </div>
-        <button type="submit" asp-page-handler="SimUpload">Prześlij</button>
-    </form>
-    <div class="simulation-info">
-        <h2>Aktualne ustawienia <br />symulacji:</h2>
-        <p>
-            Lista stworów:
-            @{
-                List<string> mappables = [];
-                for (int i = 0; i < Model.SimHistory.TurnLogs.Count; i++)
-                {
-                    if (!mappables.Contains(Model.SimHistory.TurnLogs[i].Mappable))
-                    {
-                        if (Model.SimHistory.TurnLogs[i].Mappable != "Pozycje startowe")
-                        {
-                            mappables.Add(Model.SimHistory.TurnLogs[i].Mappable);
-                        }  
-                    }
-                }
+    </div>
 
-                foreach (string mappable in mappables)
-                {
-                    <br />
-                    @mappable
-                }
-            }
-        </p>
+<div class="container">
+    <!-- Left Panel: JSON Upload -->
+    <div class="left-panel">
+        <h2>Wysyłanie JSON</h2>
+        <form asp-page="/Index" method="post" enctype="multipart/form-data">
+            <label for="file">Wybierz plik:</label>
+            <input type="file" id="file" name="file" />
+            <button type="submit" asp-page-handler="SimUpload">Prześlij</button>
+        </form>
+    </div>
 
-        <p>
-            Punkty startowe:
-            @{
-                string points = "";
-                foreach (Point key in Model.SimHistory.TurnLogs[0].Symbols.Keys)
-                {
-                    points += $"{key.ToString()}, ";
-                }
-                @points.Substring(0, points.Length - 2)
-            }
-        </p>
-
-        <p>
-            Sekwencja ruchów:
-            @{
-                string sequence = "";
-                for (int i = 1; i < Model.SimHistory.TurnLogs.Count; i++)
-                {
-                    var move = Model.SimHistory.TurnLogs[i].Move.Substring(0, 1);
-                    sequence += move;
-                }
-                @sequence
-            }
-        </p>
+    <!-- Right Panel: JSON Download -->
+    <div class="right-panel">
+        <h2>Pobierz JSON</h2>
+        <form asp-page="/Index" method="post">
+            <button type="submit" asp-page-handler="DownloadJson">Pobierz JSON</button>
+        </form>
     </div>
 </div>

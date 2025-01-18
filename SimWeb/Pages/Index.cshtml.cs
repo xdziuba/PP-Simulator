@@ -61,25 +61,44 @@ public class IndexModel : PageModel
         CurrentLog = SimHistory.TurnLogs[Turn];
     }
 
+
     public void OnGet()
     {
         Turn = HttpContext.Session.GetInt32("Turn") ?? 0;
-        if (HttpContext.Session.GetString("SimJSON") != null)
-        {
-            var options = new JsonSerializerOptions
-            {
-                WriteIndented = true,
-                ReferenceHandler = ReferenceHandler.Preserve,
-                PropertyNameCaseInsensitive = true
-            };
 
-            JSONSimDef jsonObject = JsonSerializer.Deserialize<JSONSimDef>(HttpContext.Session.GetString("SimJSON")!, options)!;
-            SimInit(jsonObject);
-        }
-        else
+        if (Simulation == null)
         {
             SimInit();
         }
+    }
+
+    public IActionResult OnPostDownloadJson()
+    {
+        if (Simulation == null)
+        {
+            SimInit();
+        }
+        var map = Simulation.Map;
+        var creatures = Simulation.Creatures;
+        var moves = Simulation.Moves;
+        var points = Simulation.Positions;
+
+        JSONSimDef simDef = new JSONSimDef { Map = (SmallTorusMap)map, Mappables = creatures, Moves = moves, Points = points };
+
+        var options = new JsonSerializerOptions
+        {
+            WriteIndented = true,
+            ReferenceHandler = ReferenceHandler.Preserve,
+            PropertyNameCaseInsensitive = true
+        };
+
+
+
+        var jsonString = JsonSerializer.Serialize(simDef, options);
+        var fileName = "simulation.json";
+        var fileBytes = System.Text.Encoding.UTF8.GetBytes(jsonString);
+
+        return File(fileBytes, "application/json", fileName);
     }
 
     public void OnPostNextTurn()
@@ -141,7 +160,6 @@ public class IndexModel : PageModel
 
     public void OnPostSimUpload()
     {
-        HttpContext.Session.SetInt32("Turn", 0);
         var options = new JsonSerializerOptions
         {
             WriteIndented = true,
@@ -149,10 +167,10 @@ public class IndexModel : PageModel
             PropertyNameCaseInsensitive = true
         };
 
-        //if (SimHistory == null)
-        //{
-            //SimInit();
-        //}
+        if (SimHistory == null)
+        {
+            SimInit();
+        }
         if (File != null && File.Length > 0)
         {
             using (var stream = new MemoryStream())
