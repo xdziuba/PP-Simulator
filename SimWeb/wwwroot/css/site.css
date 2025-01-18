@@ -50,49 +50,51 @@ body {
     margin-top: 20px;
 }
 
+.bottom-panels {
+    display: flex;
+    justify-content: space-between; /* Space out the two panels */
+    align-items: flex-start;
+    width: 100%;
+    padding: 20px 2vw; /* Adjust padding for spacing */
+    margin-top: 2%;
+    box-sizing: border-box;
+}
+
 .left-panel, .right-panel {
-    width: 25%;
-    height: 40vh; /* Reduced height for panels below the grid */
-    margin-top: 1vh; /* Slight margin for separation */
+    flex: 1; /* Equal width for both panels */
+    max-width: 48%; /* Leave some gap between them */
     background-color: #f0f0f0;
     border-radius: 10px;
-    justify-content: center;
-    align-items: center;
-    padding: 0px;
-    font-weight: 700;
+    padding: 10px;
     text-align: center;
-    font-size: 1rem;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    height: 25vh; /* Adjust height */
 }
 
 .left-panel {
-    margin-left: 3vh;
+    margin-right: 2%;
 }
 
 .right-panel {
-    margin-right: 3vh;
+    margin-left: 2%;
 }
 
     .left-panel h2, .right-panel h2 {
-        padding-bottom: 5%;
+        margin-bottom: 10px;
     }
 
     .left-panel form, .right-panel form {
-        margin: 1%;
+        margin: 0 auto;
     }
 
     .left-panel input[type="file"], .right-panel button {
-        margin-top: 2%;
-        background-color: darkslateblue;
-        border: none;
-        color: white;
-        padding: 15px 32px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        cursor: pointer;
+        margin-top: 10px;
+        padding: 10px 20px;
         border-radius: 8px;
+        font-size: 1rem;
+        background-color: darkslateblue;
+        color: white;
+        border: none;
+        cursor: pointer;
         transition: all 0.3s ease;
     }
 
@@ -100,15 +102,6 @@ body {
             background-color: midnightblue;
             transform: translateY(-3px);
         }
-
-    .left-panel label, .right-panel button {
-        margin-bottom: 6%;
-        color: #1a1a1a;
-    }
-
-    .right-panel button {
-        margin-top: 2%;
-    }
 
 .control-panel {
     display: flex;
